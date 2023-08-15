@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-db.sync({ force: true })
+db.sync()
   .then(() => {
     console.log('Database connected!');
   })
