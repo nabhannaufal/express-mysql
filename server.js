@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import db from './database/db.js';
 import movieRouter from './routes/movieRouter.js';
+import galeryRouter from './routes/galeryRouter.js';
 
 const port = process.env.PORT || 3000;
 
@@ -24,6 +25,7 @@ app.get('/api/ping', (req, res) => {
 });
 
 app.use('/api/movies', movieRouter);
+app.use('/api/galeries', galeryRouter);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
