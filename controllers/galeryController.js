@@ -19,6 +19,7 @@ const galeryController = {
         });
       }
     } catch (err) {
+      console.log(err);
       res.status(500).json({
         status: 'error',
         statusCode: 500,
