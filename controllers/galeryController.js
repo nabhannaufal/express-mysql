@@ -95,17 +95,35 @@ const galeryController = {
     }
   },
   getDataFromS3: async (req, res) => {
-    const s3 = new AWS.S3();
-    const params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: req.params.key,
-    };
-    const data = await s3.getObject(params).promise();
-    res.json({
-      status: 'success',
-      message: 'Success get data from s3',
-      data,
-    });
+    try {
+      const s3 = new AWS.S3();
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+      };
+      const data = await s3.listObjects(params).promise();
+      if (data?.Contents.length > 0) {
+        const objectList = data.Contents.map((obj) => ({
+          key: obj.Key,
+          size: obj.Size,
+        }));
+        res.json({
+          status: 'success',
+          message: 'Success get data from s3',
+          data: objectList,
+        });
+      } else {
+        res.json({
+          status: 'success',
+          message: 'no data found',
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        status: 'error',
+        statusCode: 500,
+        message: err,
+      });
+    }
   },
 };
 
