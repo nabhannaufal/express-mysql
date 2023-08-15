@@ -28,9 +28,13 @@ const galeryController = {
     }
   },
 
-  addGaleryDB: async (req, res) => {
+  addGaleryLocal: async (req, res) => {
     try {
-      const newGalery = await galery.create(req.body);
+      const data = {
+        photo_title: req.file.filename,
+        photo_url: req.protocol + '://' + req.get('host') + '/' + req.file.filename,
+      };
+      const newGalery = await galery.create(data);
       if (newGalery) {
         res.json({
           status: 'success',
@@ -40,6 +44,7 @@ const galeryController = {
         });
       }
     } catch (err) {
+      console.log(err);
       res.status(500).json({
         status: 'error',
         statusCode: 500,
