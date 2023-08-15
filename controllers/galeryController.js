@@ -26,6 +26,26 @@ const galeryController = {
       });
     }
   },
+
+  addGaleryDB: async (req, res) => {
+    try {
+      const newGalery = await galery.create(req.body);
+      if (newGalery) {
+        res.json({
+          status: 'success',
+          statusCode: 200,
+          message: 'Success add galery',
+          data: newGalery,
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        status: 'error',
+        statusCode: 500,
+        message: err,
+      });
+    }
+  },
   showGalery: async (req, res) => {
     try {
       const allGalery = await galery.findAll();
