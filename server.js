@@ -27,7 +27,7 @@ app.get('/api/ping', (req, res) => {
 app.use('/api/movies', movieRouter);
 app.use('/api/galeries', galeryRouter);
 
-app.use(express.static('temp/uploads'));
+app.use(express.static('tmp/uploads'));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
