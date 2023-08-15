@@ -1,5 +1,7 @@
 import { galery } from '../database/db.js';
 
+import AWS from 'aws-sdk';
+
 const galeryController = {
   addGalery: async (req, res) => {
     try {
@@ -65,6 +67,19 @@ const galeryController = {
         statusCode: 500,
       });
     }
+  },
+  getDataFromS3: async (req, res) => {
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: req.params.key,
+    };
+    const data = await s3.getObject(params).promise();
+    res.json({
+      status: 'success',
+      message: 'Success get data from s3',
+      data,
+    });
   },
 };
 

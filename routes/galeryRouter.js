@@ -6,6 +6,7 @@ const galeryRouter = express.Router();
 
 galeryRouter.post('/', upload.single('photo'), galeryController.addGalery);
 galeryRouter.get('/', galeryController.showGalery);
-galeryRouter.get('/:id', galeryController.findPhotos);
+galeryRouter.get('/find/:id', galeryController.findPhotos);
+galeryRouter.get('/s3/:key', galeryController.getDataFromS3);
 
 export default galeryRouter;
